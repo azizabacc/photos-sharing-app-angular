@@ -1,27 +1,86 @@
-# PicShare
+![Alt text](src/assets/appScreens/appScreen3.png)
+![Alt text](src/assets/appScreens/appScreen2.png)
+![Alt text](src/assets/appScreens/appScreen1.png)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.9.
+```sh
+ng new picShare --style=scss --skip-tests
 
-## Development server
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# Good practices : 
+## Bad :
 
-## Code scaffolding
+```html
+  <img src="{{ imageUrl }}" alt="{{ title }}">
+  ``` 
+## Good :
+ ```html 
+  <img [src]="imageUrl" [alt]="title">
+  ```  
+## Bad :
+```ts
+export class FaceSnap {
+  title: string;
+  description: string;
+  createdDate: Date;
+  snaps: number;
+  imageUrl: string;
+  
+  constructor(title: string, description: string, imageUrl: string, createdDate: Date, snaps: number) {
+    this.title = title;
+    this.description = description;
+    this.imageUrl = imageUrl;
+    this.createdDate = createdDate;
+    this.snaps = snaps;
+  }
+}
+```
+## Good :
+  ```ts
+  export class FaceSnap {
+  constructor(public title: string,
+              public description: string,
+              public imageUrl: string,
+              public createdDate: Date,
+              public snaps: number) {
+  }
+}
+  ```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  # Theory :
+  ## Directives :
 
-## Running unit tests
+1. Structural Directives :
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Structural directives modify the structure of the DOM by adding or removing HTML elements based on certain conditions or values. Structural directives are prefixed with an asterisk (*).
+Examples: `*ngIf, *ngFor, *ngSwitch`.
 
-## Running end-to-end tests
+2. Attribute Directives :
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Attribute directives modify the appearance or behavior of HTML elements by adding, modifying, or removing attributes or CSS classes.
+Examples: `[ngClass], [ngStyle], [ngModel], [ngIf], [ngFor]`.
 
-## Further help
+3. Component Directives:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Component directives allow you to include custom components in a template. They are used to encapsulate the logic and appearance of a part of the application.
+Example: `<app-my-component></app-my-component>` (where app-my-component is the component selector).
+
+## Scrolling Methods :
+1. ``` this.scroller.scrollToAnchor("targetRed"): ```
+
+Uses ViewportScroller, which may be preferable if you want better control over scrolling in your Angular application.
+Suitable for instant scrolling to a specific element without smooth animation.
+
+
+2. ``` document.getElementById("targetGreen").scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" }): ```
+
+
+Uses the standard DOM API, which can be simpler and more straightforward in some cases.
+Allows smooth scrolling to the specified element with animation.
+
+3. ``` this.router.navigate([], { fragment: "targetBlue" }): ```
+
+Uses the Angular router to handle scrolling during fragment-based URL navigation.
+Useful if you're using URL fragments for navigation and want the router to automatically handle scrolling.
