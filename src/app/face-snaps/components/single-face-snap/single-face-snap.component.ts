@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FaceSnap } from '../models/face-snap.model';
-import { FaceSnapsService } from '../services/face-snaps.service';
+import { FaceSnap } from 'src/app/core/models/face-snap.model';
+import { FaceSnapsService } from 'src/app/core/services/face-snaps.service';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-single-face-snap',
@@ -10,21 +11,26 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SingleFaceSnapComponent {
  faceSnap! :FaceSnap;
+
+ faceSnap$! :Observable<FaceSnap> ;
+
   constructor(private faceSnapsService : FaceSnapsService, private route:ActivatedRoute){}
   ngOnInit() {
     // type of params : string / the + transforms the string of numbers into interger
     const faceSnapId = +this.route.snapshot.params['id'];
-    this.faceSnap = this.faceSnapsService.getFaceSnapById(faceSnapId);
+    this.faceSnap$ = this.faceSnapsService.getFaceSnapById(faceSnapId);
  
     
 
   }
 
-  AddSnaps(){
-      this.faceSnapsService.SnapByFaceSnapId(this.faceSnap.id, 'plus')
+  AddSnaps(id:number){
+    this.faceSnap$ = this.faceSnapsService.SnapByFaceSnapId(id, 'plus').pipe()
+
+
   }
-  RemoveSnaps(){
-    this.faceSnapsService.SnapByFaceSnapId(this.faceSnap.id, 'minus')
+  RemoveSnaps(id:number){
+    this.faceSnap$ = this.faceSnapsService.SnapByFaceSnapId(id, 'minus').pipe()
 }
 
 }

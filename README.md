@@ -84,3 +84,48 @@ Allows smooth scrolling to the specified element with animation.
 
 Uses the Angular router to handle scrolling during fragment-based URL navigation.
 Useful if you're using URL fragments for navigation and want the router to automatically handle scrolling.
+
+## Observables :
+
+- The `interval()` method generates an Observable that emits increasing numbers.
+
+- The `subscribe()` method allows you to subscribe to an Observable in TypeScript code.
+
+- The `async` pipe subscribes to an Observable to display its emissions in the template.
+
+
+## Validators : 
+
+# Remarks
+
+```js 
+    interval(1000).pipe(
+      tap(console.log))
+```
+is equivalent to :
+```js 
+    interval(1000).pipe(
+      tap(value=>console.log(value)))
+```
+
+
+```html 
+  <form>
+    <label for="emailInput">Subscribe to receive our newsletter</label>
+    <input type="email" id="emailInput" [(ngModel)]="userEmail" name="userEmail">
+    <button type="submit" (click)="onSubmitForm()">OK</button>
+  </form>
+```
+is equivalent to :
+```html
+  <form (ngSubmit="onSubmitForm()")> 
+    <label for="emailInput">Subscribe to receive our newsletter</label>
+    <input type="email" id="emailInput" [(ngModel)]="userEmail" name="userEmail">
+    <button type="submit">OK</button>
+  </form>
+```
+
+  FormsModule in the imports in app.module.ts creates a directive ngForm in each form created in the app. in the landing-page_component.html we create a local reference to that directive ``` <form #emailForm="ngForm" > ``` . then we could pass that reference the method Onsubmit :
+  ```   <form #emailForm="ngForm" (ngSubmit)="onSubmitForm(emailForm)"> ``` 
+  which has the following declaration : 
+  ``` onSubmitForm(form: NgForm):void { console.log(form.value);} ```

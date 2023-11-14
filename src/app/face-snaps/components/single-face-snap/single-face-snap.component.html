@@ -1,14 +1,14 @@
 
 
-<div class="face-snap-card" id="face-snap-card 'faceSnap.id'" [ngClass]="faceSnap.snaps > 10 ? 'snapped' : ''">
+<div class="face-snap-card" id="face-snap-card 'faceSnap.id'"  *ngIf="faceSnap$ | async as faceSnap"  [ngClass]="faceSnap.snaps > 10 ? 'snapped' : ''">
     <h1>{{faceSnap.title | uppercase}}</h1>
     <h2>{{faceSnap.description}}</h2>
     <h3>Posted the {{faceSnap.createdDate | date: "dd/MM/yy, 'at'  h:mm a" }}</h3>
     <div class="snaps-div">
-        <button class="btn-snaps-minus btn-snaps" (click)="RemoveSnaps()">-</button>
+        <button class="btn-snaps-minus btn-snaps" (click)="RemoveSnaps(faceSnap.id)">-</button>
         <p class="snaps-score" [ngStyle]="{ color: 'rgb(0, ' + faceSnap.snaps + ', 0)' }">🤌 {{ faceSnap.snaps }}</p>
 
-        <button class="btn-snaps-plus btn-snaps" (click)="AddSnaps()">+</button>
+        <button class="btn-snaps-plus btn-snaps" (click)="AddSnaps(faceSnap.id)">+</button>
     </div>
 
     <img [src]="faceSnap.imageUrl" alt="faceSnap.title">
